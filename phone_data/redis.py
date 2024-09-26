@@ -8,7 +8,7 @@ class Redis:
     @classmethod
     async def connect(
         cls,
-        host: str = "localhost",
+        host: str = "redis",
         port: int = 6379,
     ):
         try:
