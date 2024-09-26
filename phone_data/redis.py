@@ -10,14 +10,10 @@ class Redis:
         cls,
         host: str = "localhost",
         port: int = 6379,
-        username=None,
-        password=None,
     ):
         try:
             # Connect to Redis server
-            cls.redis_client = redis.Redis(
-                host=host, port=port, username=username, password=password
-            )
+            cls.redis_client = redis.Redis(host=host, port=port)
         except redis.RedisError as e:
             logging.debug(f"Failed to connect to Redis: {e}")
             raise
@@ -42,5 +38,3 @@ class Redis:
     # async def check_key(cls, key: str):
     #     result = await cls.redis_client.exists(key)
     #     return result
-
-
