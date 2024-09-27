@@ -1,8 +1,3 @@
-import os
-
-from dotenv import load_dotenv
-
-load_dotenv()
-
-redis_host = os.environ["REDIS_HOST"]
-redis_port = os.environ["REDIS_PORT"]
+redis_host = "redis"
+redis_port = 6379
+amount_of_phone_numbers=11

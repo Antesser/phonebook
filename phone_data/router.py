@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 
+from config import amount_of_phone_numbers
 from phone_data.schemas import PhoneAndAddress
 
 router = APIRouter(prefix="", tags=["phones"])
@@ -22,14 +23,22 @@ async def get_address_data(request: Request, phone: str):
 async def write_phone_or_address(request: Request, data: PhoneAndAddress):
     redis_client = request.app.state.redis_client
     try:
-        if isinstance(int(data.phone), int):
+        # some basic checks if inputed data is sort of a phone number
+        if (
+            isinstance(int(data.phone), int)
+            and len(data.phone) == amount_of_phone_numbers
+        ):
             await redis_client.insert_data(data.phone, data.address)
             return JSONResponse(
                 dict(response=f"DB has been updated with {data}")
             )
+        else:
+            return JSONResponse(
+                dict(response=f"Check amount of numbers in phone={data.phone}")
+            )
     except ValueError:
         return JSONResponse(
             dict(
-                response=f"phone={data.phone} doesn't look like a number, kindly provide a proper one"
+                response=f"Phone={data.phone} doesn't look like a number, kindly provide a proper one"
             )
         )
