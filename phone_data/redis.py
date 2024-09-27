@@ -1,5 +1,6 @@
 import redis.asyncio as redis
 
+from config import redis_host, redis_port
 from phone_data.logger import logging
 
 
@@ -11,8 +12,8 @@ class Redis:
     @classmethod
     async def connect(
         cls,
-        host: str = "localhost",
-        port: int = 6379,
+        host: str = redis_host,
+        port: int = redis_port,
     ):
         try:
             # Connecting to Redis server

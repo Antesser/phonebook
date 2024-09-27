@@ -1,5 +1,7 @@
 services:
   web:
+    env_file:
+      - ".env"
     build: .
     command: uvicorn main:app --host 0.0.0.0
     volumes:
