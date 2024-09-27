@@ -1,6 +1,5 @@
 import redis.asyncio as redis
 
-
 from phone_data.logger import logging
 
 
@@ -12,7 +11,7 @@ class Redis:
     @classmethod
     async def connect(
         cls,
-        host: str = "redis",
+        host: str = "localhost",
         port: int = 6379,
     ):
         try:
@@ -37,8 +36,3 @@ class Redis:
     async def get_value(cls, key: str):
         result = await cls.redis_client.get(key)
         return result
-
-    # @classmethod
-    # async def check_key(cls, key: str):
-    #     result = await cls.redis_client.exists(key)
-    #     return result

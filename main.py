@@ -22,7 +22,7 @@ async def lifespan(app: FastAPI):
     # as on_event is deprecated i'm using lifespan to establish db conn once before starting an app and shut it down afterwards
     logging.debug("enter lifespan")
     # app.state is a mechanism for storing and retrieving data between requests within a single session (connection), meaning
-    # state() method is used to work with data that should be available throughout the lifetime of the request.
+    # state method is used to work with data that should be available throughout the lifetime of the request.
     app.state.redis_client = await run_redis()
     yield
     app.state.redis_client = await stop_redis()
