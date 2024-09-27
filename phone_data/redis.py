@@ -1,18 +1,22 @@
-from phone_data.logger import logging
 import redis.asyncio as redis
 
 
+from phone_data.logger import logging
+
+
 class Redis:
+    """Creating a client to connect and manage Redis"""
+
     redis_client: redis.Redis = None
 
     @classmethod
     async def connect(
         cls,
-        host: str = "redis",
+        host: str = "localhost",
         port: int = 6379,
     ):
         try:
-            # Connect to Redis server
+            # Connecting to Redis server
             cls.redis_client = redis.Redis(host=host, port=port)
         except redis.RedisError as e:
             logging.debug(f"Failed to connect to Redis: {e}")

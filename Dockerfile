@@ -1,8 +1,8 @@
 FROM python:3.12
 
-RUN mkdir -p /phone_data
+RUN mkdir -p /phonebook
 
-WORKDIR /phone_data
+WORKDIR /phonebook
 
 COPY requirements.txt .
 

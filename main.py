@@ -1,9 +1,10 @@
 from contextlib import asynccontextmanager
-from phone_data.router import router as phone_data_router
-from fastapi import FastAPI
-from phone_data.logger import logging
 
+from fastapi import FastAPI
+
+from phone_data.logger import logging
 from phone_data.redis import Redis
+from phone_data.router import router as phone_data_router
 
 
 async def run_redis():
@@ -18,9 +19,10 @@ async def stop_redis():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # as on_event is deprecated i'm using lifespan to establish db conn once before starting an app and shut it down afterwards
     logging.debug("enter lifespan")
-    # В контексте FastAPI app.state — это механизм для хранения и извлечения данных между запросами в рамках одного сеанса (соединения). Это позволяет сохранять состояние приложения, например, аутентифицированного пользователя или какие-либо настройки.
-    # В Python объект app является экземпляром класса FastAPI, который предоставляет различные методы и атрибуты для создания веб-сервиса. Метод state() используется для работы с данными, которые должны быть доступны на протяжении всего времени жизни запроса.
+    # app.state is a mechanism for storing and retrieving data between requests within a single session (connection), meaning
+    # state() method is used to work with data that should be available throughout the lifetime of the request.
     app.state.redis_client = await run_redis()
     yield
     app.state.redis_client = await stop_redis()
