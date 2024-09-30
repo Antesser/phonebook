@@ -22,7 +22,9 @@ async def get_address_data(request: Request, phone: str) -> JSONResponse:
 
 
 @router.post("/write_data")
-async def write_phone_and_address(request: Request, data: PhoneAndAddress) -> JSONResponse:
+async def write_phone_and_address(
+    request: Request, data: PhoneAndAddress
+) -> JSONResponse:
     redis_client = request.app.state.redis_client
 
     await redis_client.insert_data(data.phone, data.address)
@@ -30,7 +32,9 @@ async def write_phone_and_address(request: Request, data: PhoneAndAddress) -> JS
 
 
 @router.patch("/write_data")
-async def update_address(request: Request, data: PhoneAndAddress) -> JSONResponse:
+async def update_address(
+    request: Request, data: PhoneAndAddress
+) -> JSONResponse:
     redis_client = request.app.state.redis_client
     value = await redis_client.get_value(data.phone)
     if value is not None:

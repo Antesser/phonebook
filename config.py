@@ -1,6 +1,6 @@
 from dotenv import find_dotenv, load_dotenv
-from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import RedisDsn, computed_field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
