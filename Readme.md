@@ -10,7 +10,7 @@ Then use Swagger on http://localhost:5000/docs or just send requests via endpoin
 
 For check_data you should send data in header like http://localhost:5000/check_data?phone=89541627281 
 
-As for write_data endpoint JSON similar to {"phone": "89541627281","address": "Moscow"} should be sent in request body towards http://localhost:5000/write_data/ in order to add or update information in DB
+As for write_data endpoint JSON similar to {"phone": "89541627281","address": "Moscow"} should be sent in request body towards http://localhost:5000/write_data/ in order to add POST or update PATCH information in DB
 
 
 **Second task**
