@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import JSONResponse
 
 from config import amount_of_phone_numbers
-from phone_data.schemas import PhoneAndAddress, UpdatePhoneAndAddress
+from phone_data.schemas import PhoneAndAddress
 
 router = APIRouter(prefix="", tags=["phones"])
 
@@ -18,12 +18,12 @@ async def get_address_data(request: Request, phone: str):
     else:
         raise HTTPException(
             status_code=404,
-            detail="Such number is missing in DB: {data.phone}",
+            detail=f"Such number is missing in DB: {phone}",
         )
 
 
 @router.post("/write_data")
-async def write_phone_or_address(request: Request, data: PhoneAndAddress):
+async def write_phone_and_address(request: Request, data: PhoneAndAddress):
     redis_client = request.app.state.redis_client
     try:
         # some basic checks if inputed data is sort of a phone number
@@ -48,9 +48,7 @@ async def write_phone_or_address(request: Request, data: PhoneAndAddress):
 
 
 @router.patch("/write_data")
-async def update_address(
-    request: Request, data: UpdatePhoneAndAddress
-):
+async def update_address(request: Request, data: PhoneAndAddress):
     redis_client = request.app.state.redis_client
     try:
         if (
@@ -66,7 +64,7 @@ async def update_address(
             else:
                 raise HTTPException(
                     status_code=404,
-                    detail="Such number is missing in DB: {data.phone}",
+                    detail=f"Such number is missing in DB: {data.phone}",
                 )
         else:
             return JSONResponse(
