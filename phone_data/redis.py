@@ -9,6 +9,7 @@ class Redis:
 
     redis_client: redis.Redis = None
 
+    # ? on the other hand we could've created connection_pool and used Depends injections in endpoints to reduce open-closing connection costs
     @classmethod
     async def connect(
         cls,
@@ -16,7 +17,6 @@ class Redis:
         port: int = redis_port,
     ):
         try:
-            # Connecting to Redis server
             cls.redis_client = redis.Redis(host=host, port=port)
         except redis.RedisError as e:
             logging.debug(f"Failed to connect to Redis: {e}")
