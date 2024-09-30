@@ -1,5 +1,4 @@
 from dotenv import find_dotenv, load_dotenv
-from pydantic import RedisDsn, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -13,15 +12,6 @@ class Settings(BaseSettings):
     )
     REDIS_HOST: str
     REDIS_PORT: int
-
-    @computed_field
-    @property
-    def REDIS_URL(self) -> str:  # noqa
-        return RedisDsn.build(
-            scheme="redis",
-            host=self.REDIS_HOST,
-            port=int(self.REDIS_PORT),
-        ).unicode_string()
 
 
 def get_settings() -> Settings:
