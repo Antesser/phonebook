@@ -7,7 +7,7 @@ router = APIRouter(prefix="", tags=["phones"])
 
 
 @router.get("/check_data")
-async def get_address_data(request: Request, phone: str):
+async def get_address_data(request: Request, phone: str) -> JSONResponse:
     # using our state client to work with redis connection
     redis_client = request.app.state.redis_client
     value = await redis_client.get_value(phone)
@@ -22,7 +22,7 @@ async def get_address_data(request: Request, phone: str):
 
 
 @router.post("/write_data")
-async def write_phone_and_address(request: Request, data: PhoneAndAddress):
+async def write_phone_and_address(request: Request, data: PhoneAndAddress) -> JSONResponse:
     redis_client = request.app.state.redis_client
 
     await redis_client.insert_data(data.phone, data.address)
@@ -30,7 +30,7 @@ async def write_phone_and_address(request: Request, data: PhoneAndAddress):
 
 
 @router.patch("/write_data")
-async def update_address(request: Request, data: PhoneAndAddress):
+async def update_address(request: Request, data: PhoneAndAddress) -> JSONResponse:
     redis_client = request.app.state.redis_client
     value = await redis_client.get_value(data.phone)
     if value is not None:
