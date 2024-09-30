@@ -48,7 +48,7 @@ async def write_phone_or_address(request: Request, data: PhoneAndAddress):
 
 
 @router.patch("/write_data")
-async def update_phone_or_address(
+async def update_address(
     request: Request, data: UpdatePhoneAndAddress
 ):
     redis_client = request.app.state.redis_client
