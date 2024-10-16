@@ -6,7 +6,7 @@ from phone_data.schemas import PhoneAndAddress
 router = APIRouter(prefix="", tags=["phones"])
 
 
-@router.get("/check_data")
+@router.get("/data_checker")
 async def get_address_data(request: Request, phone: str) -> JSONResponse:
     # using our state client to work with redis connection
     redis_client = request.app.state.redis_client
@@ -21,7 +21,7 @@ async def get_address_data(request: Request, phone: str) -> JSONResponse:
         )
 
 
-@router.post("/write_data")
+@router.post("/data_writer")
 async def write_phone_and_address(
     request: Request, data: PhoneAndAddress
 ) -> JSONResponse:
@@ -31,7 +31,7 @@ async def write_phone_and_address(
     return JSONResponse(dict(response=f"DB has been added with {data}"))
 
 
-@router.patch("/write_data")
+@router.patch("/data_writer")
 async def update_address(
     request: Request, data: PhoneAndAddress
 ) -> JSONResponse:
